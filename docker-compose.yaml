@@ -1,0 +1,30 @@
+version: "2.1"
+
+services:
+
+  simple-service-s3:
+    container_name: simple-service-s3
+    image: minio/minio
+    ports:
+      - 9000:9000
+    environment:
+      - MINIO_ACCESS_KEY=123123123
+      - MINIO_SECRET_KEY=123123123
+    command: server /home/shared
+
+  simple-service-db:
+    container_name: simple-service-db
+    image: postgres:10
+    ports:
+      - 5430:5432
+    environment:
+      - POSTGRES_DB=simple-service
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234567
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./data/simple-service-db:/var/lib/postgresql/data

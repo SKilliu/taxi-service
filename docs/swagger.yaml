@@ -1,0 +1,231 @@
+definitions:
+  EditProfileReq:
+    properties:
+      email:
+        example: new-email@example.com
+        type: string
+      name:
+        example: Tester
+        type: string
+    type: object
+  ErrResp:
+    properties:
+      code:
+        example: 500
+        type: integer
+      message:
+        example: INTERNAL_SERVER_ERROR
+        type: string
+    type: object
+  GetProfileResp:
+    properties:
+      email:
+        example: test@example.com
+        type: string
+      id:
+        example: Yhte-saaiudchadsc-asdvcsf
+        type: string
+      name:
+        example: Tester
+        type: string
+      profile_image_url:
+        example: http://simple-service-backend/simple-service/photo-924y82hde7ce.jpg
+        type: string
+      type_view:
+        example: owner_view
+        type: string
+    type: object
+  SignInReq:
+    properties:
+      email:
+        example: test@example.com
+        type: string
+      password:
+        example: qwerty1234
+        type: string
+    type: object
+  SignInResp:
+    properties:
+      token:
+        type: string
+    type: object
+  SignUpReq:
+    properties:
+      email:
+        example: test@example.com
+        type: string
+      password:
+        example: qwerty1234
+        type: string
+    type: object
+  SignUpResp:
+    properties:
+      token:
+        example: nausdgtGTGAjndfs.KijIYbsgfsuadfe34r
+        type: string
+    type: object
+info:
+  contact: {}
+  license: {}
+  title: Simple Service
+  version: "1.0"
+paths:
+  /sign_in:
+    post:
+      consumes:
+      - application/json
+      description: Sign in with login and password
+      parameters:
+      - description: Body for sign in
+        in: body
+        name: JSON
+        required: true
+        schema:
+          $ref: '#/definitions/SignInReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/SignInResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      summary: Sign in
+      tags:
+      - authentication
+  /sign_up:
+    post:
+      consumes:
+      - application/json
+      description: Sign up with login and password
+      parameters:
+      - description: Body for sign up
+        in: body
+        name: JSON
+        required: true
+        schema:
+          $ref: '#/definitions/SignUpReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/SignUpResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      summary: Sign up
+      tags:
+      - authentication
+  /user:
+    get:
+      consumes:
+      - application/json
+      description: Get user's profile by ID
+      parameters:
+      - description: user ID for getting profile
+        in: query
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GetProfileResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      security:
+      - bearerAuth: []
+      summary: Get profile
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: Edit user's name and email in profile info
+      parameters:
+      - description: Body for edit profile request
+        in: body
+        name: JSON
+        required: true
+        schema:
+          $ref: '#/definitions/EditProfileReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      security:
+      - bearerAuth: []
+      summary: Edit profile
+      tags:
+      - user
+  /user/image:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Update user's profile image
+      parameters:
+      - description: select image
+        in: formData
+        name: profile_image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      security:
+      - bearerAuth: []
+      summary: Update profile image
+      tags:
+      - user
+securityDefinitions:
+  bearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
