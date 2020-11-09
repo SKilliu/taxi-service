@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"net/http"
 
-	"github.com/SKilliu/taxi-service/middlewares"
 	"github.com/SKilliu/taxi-service/server/errs"
+	"github.com/SKilliu/taxi-service/server/middlewares"
 
 	"github.com/labstack/echo/v4"
 )

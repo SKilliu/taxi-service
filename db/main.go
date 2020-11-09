@@ -1,6 +1,9 @@
 package db
 
-import dbx "github.com/go-ozzo/ozzo-dbx"
+import (
+	dbx "github.com/go-ozzo/ozzo-dbx"
+	_ "github.com/lib/pq"
+)
 
 type QInterface interface {
 	DBX() *dbx.DB

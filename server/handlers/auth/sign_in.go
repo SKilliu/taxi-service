@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"net/http"
 
-	"github.com/SKilliu/taxi-service/handlers"
+	"github.com/SKilliu/taxi-service/server/handlers"
 
 	"golang.org/x/crypto/bcrypt"
 

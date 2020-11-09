@@ -67,7 +67,7 @@ definitions:
 info:
   contact: {}
   license: {}
-  title: Simple Service
+  title: Taxi-service
   version: "1.0"
 paths:
   /sign_in:
@@ -190,37 +190,6 @@ paths:
       security:
       - bearerAuth: []
       summary: Edit profile
-      tags:
-      - user
-  /user/image:
-    post:
-      consumes:
-      - multipart/form-data
-      description: Update user's profile image
-      parameters:
-      - description: select image
-        in: formData
-        name: profile_image
-        required: true
-        type: file
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: ""
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/ErrResp'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrResp'
-      security:
-      - bearerAuth: []
-      summary: Update profile image
       tags:
       - user
 securityDefinitions:

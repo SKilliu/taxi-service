@@ -13,11 +13,11 @@ require (
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/google/uuid v1.1.2
 	github.com/labstack/echo/v4 v4.1.17
-	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
+	github.com/lib/pq v1.8.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.7.0
 	github.com/swaggo/echo-swagger v1.0.0
-	github.com/swaggo/swag v1.6.9
+	github.com/swaggo/swag v1.6.3
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
-	gopkg.in/yaml.v2 v2.2.8
+	gopkg.in/yaml.v2 v2.3.0
 )

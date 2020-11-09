@@ -8,8 +8,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/SKilliu/taxi-service/db/models"
-	"github.com/SKilliu/taxi-service/handlers"
 	"github.com/SKilliu/taxi-service/server/errs"
+	"github.com/SKilliu/taxi-service/server/handlers"
 	"github.com/google/uuid"
 
 	validation "github.com/go-ozzo/ozzo-validation"

@@ -3,6 +3,9 @@ package server
 import (
 	"time"
 
+	"github.com/SKilliu/taxi-service/config"
+	"github.com/SKilliu/taxi-service/server/middlewares"
+
 	echoSwagger "github.com/swaggo/echo-swagger"
 
 	"github.com/labstack/echo/v4"
@@ -44,7 +47,6 @@ func Router(cfg config.Config) *echo.Echo {
 
 	router.POST("/user", provider.UsersHandler.EditProfile)
 	router.GET("/user", provider.UsersHandler.GetProfile)
-	router.POST("/user/image", provider.UsersHandler.UpdateProfileImage)
 
 	return router
 }

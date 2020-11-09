@@ -214,55 +214,6 @@ var doc = `{
                     }
                 }
             }
-        },
-        "/user/image": {
-            "post": {
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "description": "Update user's profile image",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "user"
-                ],
-                "summary": "Update profile image",
-                "parameters": [
-                    {
-                        "type": "file",
-                        "description": "select image",
-                        "name": "profile_image",
-                        "in": "formData",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": ""
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/ErrResp"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/ErrResp"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -385,7 +336,7 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "",
 	BasePath:    "",
 	Schemes:     []string{},
-	Title:       "Simple Service",
+	Title:       "Taxi-service",
 	Description: "",
 }
 

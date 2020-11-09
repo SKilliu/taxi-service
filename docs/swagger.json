@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Simple Service",
+        "title": "Taxi-service",
         "contact": {},
         "license": {},
         "version": "1.0"
@@ -173,55 +173,6 @@
                         "schema": {
                             "$ref": "#/definitions/EditProfileReq"
                         }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": ""
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/ErrResp"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/ErrResp"
-                        }
-                    }
-                }
-            }
-        },
-        "/user/image": {
-            "post": {
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "description": "Update user's profile image",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "user"
-                ],
-                "summary": "Update profile image",
-                "parameters": [
-                    {
-                        "type": "file",
-                        "description": "select image",
-                        "name": "profile_image",
-                        "in": "formData",
-                        "required": true
                     }
                 ],
                 "responses": {
