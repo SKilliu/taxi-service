@@ -4,10 +4,10 @@ import (
 	"crypto/tls"
 	"fmt"
 	"net/http"
-	"simple-service/config"
-	"simple-service/server"
 	"time"
 
+	"github.com/SKilliu/taxi-service/config"
+	"github.com/SKilliu/taxi-service/server"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )

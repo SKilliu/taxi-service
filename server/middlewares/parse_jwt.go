@@ -2,10 +2,10 @@ package middlewares
 
 import (
 	"net/http"
-	"simple-service/config"
-	"simple-service/server/errs"
 	"strings"
 
+	"github.com/SKilliu/taxi-service/config"
+	"github.com/SKilliu/taxi-service/server/errs"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"github.com/pkg/errors"

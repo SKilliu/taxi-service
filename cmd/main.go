@@ -3,6 +3,10 @@ package main
 import (
 	"fmt"
 
+	app "github.com/SKilliu/taxi-service"
+
+	"github.com/SKilliu/taxi-service/config"
+	"github.com/SKilliu/taxi-service/docs"
 	"github.com/pkg/errors"
 )
 

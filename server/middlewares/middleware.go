@@ -1,6 +1,6 @@
 package middlewares
 
-import "simple-service/config"
+import "github.com/SKilliu/taxi-service/config"
 
 type Middleware struct {
 	auth *config.Authentication

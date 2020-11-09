@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
-	"simple-service/db"
 
+	"github.com/SKilliu/taxi-service/db"
 	"github.com/caarlos0/env"
 	validation "github.com/go-ozzo/ozzo-validation"
 )

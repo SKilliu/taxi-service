@@ -4,12 +4,12 @@ import (
 	"database/sql"
 	"net/http"
 	"regexp"
-	"simple-service/db/models"
-	"simple-service/server/errs"
-	"simple-service/server/handlers"
 
 	"golang.org/x/crypto/bcrypt"
 
+	"github.com/SKilliu/taxi-service/db/models"
+	"github.com/SKilliu/taxi-service/handlers"
+	"github.com/SKilliu/taxi-service/server/errs"
 	"github.com/google/uuid"
 
 	validation "github.com/go-ozzo/ozzo-validation"

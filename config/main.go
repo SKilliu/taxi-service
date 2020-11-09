@@ -3,9 +3,9 @@ package config
 import (
 	"io/ioutil"
 	"os"
-	"simple-service/db"
 	"sync"
 
+	"github.com/SKilliu/taxi-service/db"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
 )

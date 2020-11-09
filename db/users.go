@@ -1,8 +1,7 @@
 package db
 
 import (
-	"simple-service/db/models"
-
+	"github.com/SKilliu/taxi-service/db/models"
 	dbx "github.com/go-ozzo/ozzo-dbx"
 )
 

@@ -3,8 +3,9 @@ package users
 import (
 	"database/sql"
 	"net/http"
-	"simple-service/server/errs"
-	"simple-service/server/middlewares"
+
+	"github.com/SKilliu/taxi-service/middlewares"
+	"github.com/SKilliu/taxi-service/server/errs"
 
 	"github.com/labstack/echo/v4"
 )

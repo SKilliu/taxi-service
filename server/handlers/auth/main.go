@@ -1,9 +1,8 @@
 package auth
 
 import (
-	"simple-service/config"
-	"simple-service/db"
-
+	"github.com/SKilliu/taxi-service/config"
+	"github.com/SKilliu/taxi-service/db"
 	"github.com/sirupsen/logrus"
 )
 

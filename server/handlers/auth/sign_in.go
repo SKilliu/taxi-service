@@ -3,11 +3,12 @@ package auth
 import (
 	"database/sql"
 	"net/http"
-	"simple-service/server/errs"
-	"simple-service/server/handlers"
+
+	"github.com/SKilliu/taxi-service/handlers"
 
 	"golang.org/x/crypto/bcrypt"
 
+	"github.com/SKilliu/taxi-service/server/errs"
 	"github.com/labstack/echo/v4"
 )
 
