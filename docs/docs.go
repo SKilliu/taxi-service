@@ -53,7 +53,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/SignInResp"
+                            "$ref": "#/definitions/SignUpResp"
                         }
                     },
                     "400": {
@@ -73,7 +73,7 @@ var doc = `{
         },
         "/sign_up": {
             "post": {
-                "description": "Sign up with login and password",
+                "description": "Create a new user by operator",
                 "consumes": [
                     "application/json"
                 ],
@@ -83,10 +83,10 @@ var doc = `{
                 "tags": [
                     "authentication"
                 ],
-                "summary": "Sign up",
+                "summary": "Create new user",
                 "parameters": [
                     {
-                        "description": "Body for sign up",
+                        "description": "Body for creation of a new user",
                         "name": "JSON",
                         "in": "body",
                         "required": true,
@@ -99,7 +99,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/SignUpResp"
+                            "type": ""
                         }
                     },
                     "400": {
@@ -281,20 +281,20 @@ var doc = `{
                 }
             }
         },
-        "SignInResp": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "type": "string"
-                }
-            }
-        },
         "SignUpReq": {
             "type": "object",
             "properties": {
+                "account_type": {
+                    "type": "string",
+                    "example": "client"
+                },
                 "email": {
                     "type": "string",
                     "example": "test@example.com"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "TestName"
                 },
                 "password": {
                     "type": "string",
@@ -307,7 +307,7 @@ var doc = `{
             "properties": {
                 "token": {
                     "type": "string",
-                    "example": "nausdgtGTGAjndfs.KijIYbsgfsuadfe34r"
+                    "example": "nausdgtGTGAjndfsKijIYbsgfsuadfe34r"
                 }
             }
         }

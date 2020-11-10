@@ -7,12 +7,6 @@ CREATE TABLE IF NOT EXISTS users (
     profile_image_url varchar(255) not null
 );
 
-CREATE TABLE IF NOT EXISTS driver_cars (
-    id varchar(36) primary key,
-    driver_id varchar(36) references users (id) on delete cascade,
-    car_id varchar(36) references cars (id) on delete cascade
-);
-
 CREATE TABLE IF NOT EXISTS orders (
     id varchar(36) primary key,
     driver_id varchar(36) references users (id) on delete cascade,
@@ -26,8 +20,14 @@ CREATE TABLE IF NOT EXISTS orders (
 
 CREATE TABLE IF NOT EXISTS cars (
     id varchar(36) primary key,
-    name varchar(50) not null,
     model varchar(255) not null,
-    number varchar(255) unique,
+    number varchar(255) not null,
+    status varchar(50) not null,
     image_url varchar(255) not null
+);
+
+CREATE TABLE IF NOT EXISTS driver_cars (
+    id varchar(36) primary key,
+    driver_id varchar(36) references users (id) on delete cascade,
+    car_id varchar(36) references cars (id) on delete cascade
 );

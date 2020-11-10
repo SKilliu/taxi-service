@@ -22,7 +22,7 @@ import (
 // @Description Sign in with login and password
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} dto.SignInResp
+// @Success 200 {object} dto.AuthResp
 // @Failure 400 {object} errs.ErrResp
 // @Failure 500 {object} errs.ErrResp
 // @Router /sign_in [post]

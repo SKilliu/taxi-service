@@ -2,12 +2,12 @@ version: "2.1"
 
 services:
   taxi-service-db:
-    container_name: simple-service-db
+    container_name: taxi-service-db
     image: postgres:10
     ports:
       - 5430:5432
     environment:
-      - POSTGRES_DB=simple-service
+      - POSTGRES_DB=taxi-service
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234567
     healthcheck:
@@ -16,4 +16,4 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - ./data/simple-service-db:/var/lib/postgresql/data
+      - ./data/taxi-service-db:/var/lib/postgresql/data

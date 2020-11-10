@@ -1,4 +1,4 @@
-package users
+package operators
 
 import (
 	"database/sql"
@@ -13,6 +13,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// CreateNewUser godoc
+// @Summary Create new user
+// @Tags operators
+// @Consume application/json
+// @Param JSON body dto.SignUpReq true "Body for creation of a new user"
+// @Description Create a new user by operator
+// @Accept  json
+// @Produce  json
+// @Success 200 {} http.StatusOK
+// @Failure 400 {object} errs.ErrResp
+// @Failure 500 {object} errs.ErrResp
+// @Router /operators/user [post]
 func (h *Handler) CreateNewUser(c echo.Context) error {
 	var req dto.SignUpReq
 

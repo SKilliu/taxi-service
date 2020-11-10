@@ -8,6 +8,7 @@ import (
 type QInterface interface {
 	DBX() *dbx.DB
 	UsersQ() UsersQ
+	CarsQ() CarsQ
 }
 
 // DB wraps dbx interface.

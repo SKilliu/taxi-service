@@ -44,15 +44,16 @@ definitions:
         example: qwerty1234
         type: string
     type: object
-  SignInResp:
-    properties:
-      token:
-        type: string
-    type: object
   SignUpReq:
     properties:
+      account_type:
+        example: client
+        type: string
       email:
         example: test@example.com
+        type: string
+      name:
+        example: TestName
         type: string
       password:
         example: qwerty1234
@@ -61,7 +62,7 @@ definitions:
   SignUpResp:
     properties:
       token:
-        example: nausdgtGTGAjndfs.KijIYbsgfsuadfe34r
+        example: nausdgtGTGAjndfsKijIYbsgfsuadfe34r
         type: string
     type: object
 info:
@@ -88,7 +89,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/SignInResp'
+            $ref: '#/definitions/SignUpResp'
         "400":
           description: Bad Request
           schema:
@@ -104,9 +105,9 @@ paths:
     post:
       consumes:
       - application/json
-      description: Sign up with login and password
+      description: Create a new user by operator
       parameters:
-      - description: Body for sign up
+      - description: Body for creation of a new user
         in: body
         name: JSON
         required: true
@@ -118,7 +119,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/SignUpResp'
+            type: ""
         "400":
           description: Bad Request
           schema:
@@ -127,7 +128,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/ErrResp'
-      summary: Sign up
+      summary: Create new user
       tags:
       - authentication
   /user:

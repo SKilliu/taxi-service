@@ -20,11 +20,11 @@ import (
 // @Summary Sign up
 // @Tags authentication
 // @Consume application/json
-// @Param JSON body SignUpReq true "Body for sign up"
+// @Param JSON body dto.SignUpReq true "Body for sign up"
 // @Description Sign up with login, password and account type (driver, client or operator)
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} SignUpResp
+// @Success 200 {object} dto.AuthResp
 // @Failure 400 {object} errs.ErrResp
 // @Failure 500 {object} errs.ErrResp
 // @Router /sign_up [post]

@@ -1,6 +1,6 @@
 package models
 
-const UsersTableName = "users"
+const UsersTableName = "operators"
 
 type User struct {
 	ID              string `db:"id"`

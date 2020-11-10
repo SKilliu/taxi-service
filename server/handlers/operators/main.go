@@ -1,4 +1,4 @@
-package users
+package operators
 
 import (
 	"github.com/SKilliu/taxi-service/config"
@@ -10,6 +10,7 @@ type Handler struct {
 	auth    *config.Authentication
 	log     *logrus.Entry
 	usersDB db.UsersQ
+	carsDB  db.CarsQ
 }
 
 func New(db db.QInterface, cfg config.Config) Handler {
@@ -17,5 +18,6 @@ func New(db db.QInterface, cfg config.Config) Handler {
 		auth:    cfg.Authentication(),
 		log:     cfg.Log(),
 		usersDB: db.UsersQ(),
+		carsDB:  db.CarsQ(),
 	}
 }
