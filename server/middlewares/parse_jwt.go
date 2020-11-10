@@ -11,7 +11,10 @@ import (
 	"github.com/pkg/errors"
 )
 
-var userID = "user_id"
+var (
+	userID      = "user_id"
+	accountType = "account_type"
+)
 
 func (m Middleware) ParseToken(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -26,6 +29,10 @@ func (m Middleware) ParseToken(next echo.HandlerFunc) echo.HandlerFunc {
 
 func GetUserIDFromJWT(r *http.Request, auth *config.Authentication) (string, string, error) {
 	return getFromJWT(r, auth, userID)
+}
+
+func GetAccountTypeFromJWT(r *http.Request, auth *config.Authentication) (string, string, error) {
+	return getFromJWT(r, auth, accountType)
 }
 
 func getFromJWT(r *http.Request, auth *config.Authentication, fieldType string) (string, string, error) {
@@ -54,7 +61,7 @@ func getFromJWT(r *http.Request, auth *config.Authentication, fieldType string) 
 
 	fieldRaw, ok = claims[fieldType]
 	if !ok {
-		return "", "", errors.New("shopper_id is absent in the jwt")
+		return "", "", errors.New("user info is absent in the jwt")
 	}
 
 	fieldValue, ok := fieldRaw.(string)

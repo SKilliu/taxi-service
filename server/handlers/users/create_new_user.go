@@ -1,4 +1,4 @@
-package auth
+package users
 
 import (
 	"database/sql"
@@ -6,29 +6,14 @@ import (
 
 	"github.com/SKilliu/taxi-service/server/dto"
 
-	"golang.org/x/crypto/bcrypt"
-
 	"github.com/SKilliu/taxi-service/db/models"
 	"github.com/SKilliu/taxi-service/server/errs"
-	"github.com/SKilliu/taxi-service/server/handlers"
 	"github.com/google/uuid"
-
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 )
 
-// SignUp godoc
-// @Summary Sign up
-// @Tags authentication
-// @Consume application/json
-// @Param JSON body SignUpReq true "Body for sign up"
-// @Description Sign up with login, password and account type (driver, client or operator)
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} SignUpResp
-// @Failure 400 {object} errs.ErrResp
-// @Failure 500 {object} errs.ErrResp
-// @Router /sign_up [post]
-func (h *Handler) SignUp(c echo.Context) error {
+func (h *Handler) CreateNewUser(c echo.Context) error {
 	var req dto.SignUpReq
 
 	err := c.Bind(&req)
@@ -68,15 +53,7 @@ func (h *Handler) SignUp(c echo.Context) error {
 				return c.JSON(http.StatusInternalServerError, errs.InternalServerErr)
 			}
 
-			token, err := handlers.GenerateJWT(userID, req.AccountType, h.auth.VerifyKey)
-			if err != nil {
-				h.log.WithError(err).Error("failed to generate token")
-				return c.JSON(http.StatusInternalServerError, errs.InternalServerErr)
-			}
-
-			return c.JSON(http.StatusOK, dto.AuthResp{
-				Token: token,
-			})
+			return c.NoContent(http.StatusOK)
 
 		default:
 			h.log.WithError(err).Error("failed to get user from db")

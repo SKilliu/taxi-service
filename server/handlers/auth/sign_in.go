@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"net/http"
 
+	"github.com/SKilliu/taxi-service/server/dto"
+
 	"github.com/SKilliu/taxi-service/server/handlers"
 
 	"golang.org/x/crypto/bcrypt"
@@ -12,29 +14,20 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type SignInReq struct {
-	Email    string `json:"email" example:"test@example.com"`
-	Password string `json:"password" example:"qwerty1234"`
-} //@name SignInReq
-
-type SignInResp struct {
-	Token string `json:"token"`
-} //@name SignInResp
-
 // SignIn godoc
 // @Summary Sign in
 // @Tags authentication
 // @Consume application/json
-// @Param JSON body SignInReq true "Body for sign in"
+// @Param JSON body dto.SignInReq true "Body for sign in"
 // @Description Sign in with login and password
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} SignInResp
+// @Success 200 {object} dto.SignInResp
 // @Failure 400 {object} errs.ErrResp
 // @Failure 500 {object} errs.ErrResp
 // @Router /sign_in [post]
 func (h *Handler) SignIn(c echo.Context) error {
-	var req SignInReq
+	var req dto.SignInReq
 
 	err := c.Bind(&req)
 	if err != nil {
@@ -60,13 +53,13 @@ func (h *Handler) SignIn(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, errs.WrongCredentialsErr)
 	}
 
-	token, err := handlers.GenerateJWT(user.ID, h.auth.VerifyKey)
+	token, err := handlers.GenerateJWT(user.ID, user.AccountType, h.auth.VerifyKey)
 	if err != nil {
 		h.log.WithError(err).Error("failed to generate token")
 		return c.JSON(http.StatusInternalServerError, errs.InternalServerErr)
 	}
 
-	return c.JSON(http.StatusOK, SignInResp{
+	return c.JSON(http.StatusOK, dto.AuthResp{
 		Token: token,
 	})
 }

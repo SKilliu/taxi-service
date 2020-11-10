@@ -1,0 +1,39 @@
+package dto
+
+import (
+	"regexp"
+
+	validation "github.com/go-ozzo/ozzo-validation"
+	"github.com/go-ozzo/ozzo-validation/is"
+)
+
+const (
+	clientRole   = "client"
+	driverRole   = "driver"
+	operatorRole = "operator"
+)
+
+type SignUpReq struct {
+	Email       string `json:"email" example:"test@example.com"`
+	Password    string `json:"password" example:"qwerty1234"`
+	Name        string `json:"name" example:"TestName"`
+	AccountType string `json:"account_type" example:"client"`
+} //@name SignUpReq
+
+type AuthResp struct {
+	Token string `json:"token" example:"nausdgtGTGAjndfsKijIYbsgfsuadfe34r"`
+} //@name SignUpResp
+
+type SignInReq struct {
+	Email    string `json:"email" example:"test@example.com"`
+	Password string `json:"password" example:"qwerty1234"`
+} //@name SignInReq
+
+func (c SignUpReq) Validate() error {
+	return validation.ValidateStruct(&c,
+		validation.Field(&c.Email, validation.Required, is.Email),
+		validation.Field(&c.Password, validation.Required, validation.Match(regexp.MustCompile("^[a-zA-Z0-9'-]{8,18}$"))),
+		validation.Field(&c.Email, validation.Required, validation.Length(5, 70)),
+		validation.Field(&c.AccountType, validation.Required, validation.In(driverRole, operatorRole, clientRole)),
+	)
+}

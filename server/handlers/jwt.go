@@ -6,11 +6,15 @@ import (
 
 type tokenField string
 
-var userID tokenField = "user_id"
+var (
+	userID      tokenField = "user_id"
+	accountType tokenField = "account_type"
+)
 
-func GenerateJWT(uid, verifyKey string) (string, error) {
+func GenerateJWT(uid, accType, verifyKey string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		string(userID): uid,
+		string(userID):      uid,
+		string(accountType): accType,
 	})
 
 	tokenString, err := token.SignedString([]byte(verifyKey))
