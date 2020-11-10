@@ -1,6 +1,7 @@
 package operators
 
 import (
+	"database/sql"
 	"net/http"
 
 	"github.com/SKilliu/taxi-service/db/models"
@@ -21,16 +22,28 @@ func (h *Handler) AddNewCar(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, errs.BadParamInBodyErr)
 	}
 
-	err = h.carsDB.Insert(models.Car{
-		ID:     uuid.New().String(),
-		Model:  req.Model,
-		Number: req.Number,
-		Status: req.Status,
-	})
+	// We don't add new car to db, if it already exists
+	_, err = h.carsDB.GetByNumber(req.Number)
 	if err != nil {
-		h.log.WithError(err).Error("failed to insert new car into db")
-		return c.JSON(http.StatusInternalServerError, errs.InternalServerErr)
+		switch err {
+		case sql.ErrNoRows:
+			err = h.carsDB.Insert(models.Car{
+				ID:     uuid.New().String(),
+				Model:  req.Model,
+				Number: req.Number,
+				Status: req.Status,
+			})
+			if err != nil {
+				h.log.WithError(err).Error("failed to insert new car into db")
+				return c.JSON(http.StatusInternalServerError, errs.InternalServerErr)
+			}
+
+			return c.NoContent(http.StatusOK)
+		default:
+			h.log.WithError(err).Error("failed to get car by number from db")
+			return c.JSON(http.StatusInternalServerError, errs.InternalServerErr)
+		}
 	}
 
-	return c.NoContent(http.StatusOK)
+	return c.JSON(http.StatusBadRequest, errs.CarAlreadyExistsErr)
 }

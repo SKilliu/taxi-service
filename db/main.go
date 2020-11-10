@@ -9,6 +9,7 @@ type QInterface interface {
 	DBX() *dbx.DB
 	UsersQ() UsersQ
 	CarsQ() CarsQ
+	OrdersQ() OrdersQ
 }
 
 // DB wraps dbx interface.

@@ -9,6 +9,7 @@ type CarsQ interface {
 	Insert(user models.Car) error
 	Update(user models.Car) error
 	Delete(car models.Car) error
+	GetByNumber(number string) (models.Car, error)
 }
 
 type CarsWrapper struct {
@@ -36,5 +37,11 @@ func (c *CarsWrapper) Delete(car models.Car) error {
 func (c *CarsWrapper) GetByID(cid string) (models.Car, error) {
 	var res models.Car
 	err := c.parent.db.Select().From(models.CarsTableName).Where(dbx.HashExp{"id": cid}).One(&res)
+	return res, err
+}
+
+func (c *CarsWrapper) GetByNumber(number string) (models.Car, error) {
+	var res models.Car
+	err := c.parent.db.Select().From(models.CarsTableName).Where(dbx.HashExp{"number": number}).One(&res)
 	return res, err
 }

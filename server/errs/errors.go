@@ -23,4 +23,5 @@ var (
 	UserDoesntExistErr   = ErrResp{"USER_DOESNT_EXIST", http.StatusBadRequest}
 	WrongCredentialsErr  = ErrResp{"WRONG_EMAIL_OR_PASS", http.StatusBadRequest}
 	NoDataInFormErr      = ErrResp{"NO_DATA_IN_FORM", http.StatusBadRequest}
+	CarAlreadyExistsErr  = ErrResp{"CAR_ALREADY_EXISTS", http.StatusForbidden}
 )
