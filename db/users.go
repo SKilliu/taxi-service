@@ -9,8 +9,8 @@ type UsersQ interface {
 	Insert(user models.User) error
 	Update(user models.User) error
 	GetByEmail(email string) (models.User, error)
-	GetAll() ([]models.User, error)
 	GetByID(uid string) (models.User, error)
+	Delete(user models.User) error
 }
 
 type UsersWrapper struct {
@@ -25,6 +25,10 @@ func (d *DB) UsersQ() UsersQ {
 
 func (u *UsersWrapper) Insert(user models.User) error {
 	return u.parent.db.Model(&user).Insert()
+}
+
+func (u *UsersWrapper) Delete(user models.User) error {
+	return u.parent.db.Model(&user).Delete()
 }
 
 func (u *UsersWrapper) Update(user models.User) error {

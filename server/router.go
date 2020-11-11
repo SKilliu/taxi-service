@@ -45,10 +45,17 @@ func Router(cfg config.Config) *echo.Echo {
 
 	router.POST("/sign_in", provider.AuthHandler.SignIn)
 
-	router.POST("/user", provider.OperatorsHandler.EditProfile)
-	router.GET("/user", provider.OperatorsHandler.GetProfile)
+	// Users handlers
+	router.GET("/user", provider.UsersHandler.GetProfile)
+	router.POST("/user", provider.UsersHandler.EditProfile)
+	router.DELETE("/user", provider.UsersHandler.Delete)
 
+	// Operators handlers
 	router.POST("/operators/user", provider.OperatorsHandler.CreateNewUser)
-	router.POST("operators/car", provider.OperatorsHandler.AddNewCar)
+	router.POST("/operators/car", provider.OperatorsHandler.AddNewCar)
+	router.POST("/operators/assign", provider.OperatorsHandler.AssignCarToDriver)
+
+	// Orders handler
+
 	return router
 }
