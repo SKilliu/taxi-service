@@ -11,6 +11,7 @@ type QInterface interface {
 	CarsQ() CarsQ
 	OrdersQ() OrdersQ
 	DriverCarsQ() DriverCarsQ
+	TripsQ() TripsQ
 }
 
 // DB wraps dbx interface.

@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/SKilliu/taxi-service/db"
+	"github.com/SKilliu/taxi-service/s3"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
 )
@@ -16,6 +17,7 @@ type Config interface {
 	Log() *logrus.Entry
 	Authentication() *Authentication
 	DB() db.QInterface
+	S3() *s3.Client
 }
 
 // ConfigImpl is implementation of config interface
@@ -26,6 +28,7 @@ type ConfigImpl struct {
 	log  *logrus.Entry
 	jwt  *Authentication
 	db   db.QInterface
+	s3   *s3.Client
 }
 
 // New config creating

@@ -25,6 +25,57 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/operators/assign": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Assign the car to the driver",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "operators"
+                ],
+                "summary": "Assign car to the driver",
+                "parameters": [
+                    {
+                        "description": "Body for assign car",
+                        "name": "JSON",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.AssignCarToDriverReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": ""
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    }
+                }
+            }
+        },
         "/operators/car": {
             "post": {
                 "security": [
@@ -42,7 +93,7 @@ var doc = `{
                 "tags": [
                     "operators"
                 ],
-                "summary": "Edit profile",
+                "summary": "Add new car",
                 "parameters": [
                     {
                         "description": "Body for add new car request",
@@ -97,6 +148,144 @@ var doc = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/SignUpReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": ""
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Create a new order as a client",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get available orders",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GetAvailableOrdersResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Create a new order as a client",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Create order",
+                "parameters": [
+                    {
+                        "description": "Body for creating new order",
+                        "name": "JSON",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateOrderReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": ""
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Accept or close the order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Actions with order",
+                "parameters": [
+                    {
+                        "description": "Body for order actions",
+                        "name": "JSON",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.OrderActionsReq"
                         }
                     }
                 ],
@@ -301,6 +490,44 @@ var doc = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Delete user profile from db",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete profile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": ""
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    }
+                }
             }
         }
     },
@@ -308,10 +535,6 @@ var doc = `{
         "AddCarReq": {
             "type": "object",
             "properties": {
-                "image_url": {
-                    "type": "string",
-                    "example": "http://photo/car-1223urhfrvndvnofvsd.jpg"
-                },
                 "model": {
                     "type": "string",
                     "example": "BMW"
@@ -327,6 +550,23 @@ var doc = `{
                 "status": {
                     "type": "string",
                     "example": "available"
+                }
+            }
+        },
+        "CreateOrderReq": {
+            "type": "object",
+            "properties": {
+                "car_arrival_time": {
+                    "type": "string",
+                    "example": "2020-11-11T23:30:00Z"
+                },
+                "destination_point": {
+                    "type": "object",
+                    "$ref": "#/definitions/Location"
+                },
+                "starting_point": {
+                    "type": "object",
+                    "$ref": "#/definitions/Location"
                 }
             }
         },
@@ -356,6 +596,27 @@ var doc = `{
                 }
             }
         },
+        "GetAvailableOrdersResp": {
+            "type": "object",
+            "properties": {
+                "car_arrival_time": {
+                    "type": "string"
+                },
+                "client_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "trip_info": {
+                    "type": "object",
+                    "$ref": "#/definitions/TripInfo"
+                }
+            }
+        },
         "GetProfileResp": {
             "type": "object",
             "properties": {
@@ -378,6 +639,23 @@ var doc = `{
                 "profile_image_url": {
                     "type": "string",
                     "example": "http://simple-service-backend/simple-service/photo-924y82hde7ce.jpg"
+                }
+            }
+        },
+        "Location": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "example": "Some City, some Street, 123"
+                },
+                "destination_point_longitude": {
+                    "type": "number",
+                    "example": 12.12345
+                },
+                "latitude": {
+                    "type": "number",
+                    "example": 12.12345
                 }
             }
         },
@@ -421,6 +699,45 @@ var doc = `{
                 "token": {
                     "type": "string",
                     "example": "nausdgtGTGAjndfsKijIYbsgfsuadfe34r"
+                }
+            }
+        },
+        "TripInfo": {
+            "type": "object",
+            "properties": {
+                "destination_point": {
+                    "type": "object",
+                    "$ref": "#/definitions/Location"
+                },
+                "distance": {
+                    "type": "number",
+                    "example": 15
+                },
+                "starting_point": {
+                    "type": "object",
+                    "$ref": "#/definitions/Location"
+                }
+            }
+        },
+        "dto.AssignCarToDriverReq": {
+            "type": "object",
+            "properties": {
+                "car_id": {
+                    "type": "string"
+                },
+                "driver_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.OrderActionsReq": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string"
+                },
+                "order_id": {
+                    "type": "string"
                 }
             }
         }

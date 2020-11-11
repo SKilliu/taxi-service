@@ -13,6 +13,7 @@ type Handler struct {
 	carsDB       db.CarsQ
 	driverCarsDB db.DriverCarsQ
 	ordersDB     db.OrdersQ
+	tripsDB      db.TripsQ
 }
 
 func New(db db.QInterface, cfg config.Config) Handler {
@@ -23,5 +24,6 @@ func New(db db.QInterface, cfg config.Config) Handler {
 		carsDB:       db.CarsQ(),
 		driverCarsDB: db.DriverCarsQ(),
 		ordersDB:     db.OrdersQ(),
+		tripsDB:      db.TripsQ(),
 	}
 }

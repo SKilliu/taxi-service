@@ -2,6 +2,11 @@ package utils
 
 import "math"
 
+const (
+	earthRadiusMi = 3958 // radius of the earth in miles.
+	earthRaidusKm = 6371 // radius of the earth in kilometers.
+)
+
 type Coordinates struct {
 	Latitude  float64
 	Longitude float64
@@ -30,8 +35,3 @@ func DistanceCalculator(coordinatesA, coordinatesB Coordinates) (float64, float6
 func toRad(value float64) float64 {
 	return value * math.Pi / 180
 }
-
-const (
-	earthRadiusMi = 3958 // radius of the earth in miles.
-	earthRaidusKm = 6371 // radius of the earth in kilometers.
-)

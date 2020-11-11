@@ -1,9 +1,6 @@
 definitions:
   AddCarReq:
     properties:
-      image_url:
-        example: http://photo/car-1223urhfrvndvnofvsd.jpg
-        type: string
       model:
         example: BMW
         type: string
@@ -16,6 +13,18 @@ definitions:
       status:
         example: available
         type: string
+    type: object
+  CreateOrderReq:
+    properties:
+      car_arrival_time:
+        example: "2020-11-11T23:30:00Z"
+        type: string
+      destination_point:
+        $ref: '#/definitions/Location'
+        type: object
+      starting_point:
+        $ref: '#/definitions/Location'
+        type: object
     type: object
   EditProfileReq:
     properties:
@@ -35,6 +44,20 @@ definitions:
         example: INTERNAL_SERVER_ERROR
         type: string
     type: object
+  GetAvailableOrdersResp:
+    properties:
+      car_arrival_time:
+        type: string
+      client_id:
+        type: string
+      id:
+        type: string
+      price:
+        type: number
+      trip_info:
+        $ref: '#/definitions/TripInfo'
+        type: object
+    type: object
   GetProfileResp:
     properties:
       account_type:
@@ -52,6 +75,18 @@ definitions:
       profile_image_url:
         example: http://simple-service-backend/simple-service/photo-924y82hde7ce.jpg
         type: string
+    type: object
+  Location:
+    properties:
+      address:
+        example: Some City, some Street, 123
+        type: string
+      destination_point_longitude:
+        example: 12.12345
+        type: number
+      latitude:
+        example: 12.12345
+        type: number
     type: object
   SignInReq:
     properties:
@@ -83,12 +118,70 @@ definitions:
         example: nausdgtGTGAjndfsKijIYbsgfsuadfe34r
         type: string
     type: object
+  TripInfo:
+    properties:
+      destination_point:
+        $ref: '#/definitions/Location'
+        type: object
+      distance:
+        example: 15
+        type: number
+      starting_point:
+        $ref: '#/definitions/Location'
+        type: object
+    type: object
+  dto.AssignCarToDriverReq:
+    properties:
+      car_id:
+        type: string
+      driver_id:
+        type: string
+    type: object
+  dto.OrderActionsReq:
+    properties:
+      action:
+        type: string
+      order_id:
+        type: string
+    type: object
 info:
   contact: {}
   license: {}
   title: Taxi-service
   version: "1.0"
 paths:
+  /operators/assign:
+    post:
+      consumes:
+      - application/json
+      description: Assign the car to the driver
+      parameters:
+      - description: Body for assign car
+        in: body
+        name: JSON
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AssignCarToDriverReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      security:
+      - bearerAuth: []
+      summary: Assign car to the driver
+      tags:
+      - operators
   /operators/car:
     post:
       consumes:
@@ -118,7 +211,7 @@ paths:
             $ref: '#/definitions/ErrResp'
       security:
       - bearerAuth: []
-      summary: Edit profile
+      summary: Add new car
       tags:
       - operators
   /operators/user:
@@ -151,6 +244,93 @@ paths:
       summary: Create new user
       tags:
       - operators
+  /orders:
+    get:
+      consumes:
+      - application/json
+      description: Create a new order as a client
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GetAvailableOrdersResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      security:
+      - bearerAuth: []
+      summary: Get available orders
+      tags:
+      - orders
+    patch:
+      consumes:
+      - application/json
+      description: Accept or close the order
+      parameters:
+      - description: Body for order actions
+        in: body
+        name: JSON
+        required: true
+        schema:
+          $ref: '#/definitions/dto.OrderActionsReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      security:
+      - bearerAuth: []
+      summary: Actions with order
+      tags:
+      - orders
+    post:
+      consumes:
+      - application/json
+      description: Create a new order as a client
+      parameters:
+      - description: Body for creating new order
+        in: body
+        name: JSON
+        required: true
+        schema:
+          $ref: '#/definitions/CreateOrderReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      security:
+      - bearerAuth: []
+      summary: Create order
+      tags:
+      - orders
   /sign_in:
     post:
       consumes:
@@ -212,6 +392,30 @@ paths:
       tags:
       - authentication
   /user:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user profile from db
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      security:
+      - bearerAuth: []
+      summary: Delete profile
+      tags:
+      - users
     get:
       consumes:
       - application/json

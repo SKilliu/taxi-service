@@ -15,6 +15,19 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// AssignCarToDriver godoc
+// @Security bearerAuth
+// @Summary Assign car to the driver
+// @Tags operators
+// @Consume application/json
+// @Param JSON body dto.AssignCarToDriverReq true "Body for assign car"
+// @Description Assign the car to the driver
+// @Accept  json
+// @Produce  json
+// @Success 200 {} http.StatusOk
+// @Failure 400 {object} errs.ErrResp
+// @Failure 500 {object} errs.ErrResp
+// @Router /operators/assign [post]
 func (h *Handler) AssignCarToDriver(c echo.Context) error {
 	var req dto.AssignCarToDriverReq
 

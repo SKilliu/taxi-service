@@ -17,7 +17,7 @@ import (
 
 // AddNewCar godoc
 // @Security bearerAuth
-// @Summary Edit profile
+// @Summary Add new car
 // @Tags operators
 // @Consume application/json
 // @Param JSON body dto.AddCarReq true "Body for add new car request"
@@ -58,6 +58,7 @@ func (h *Handler) AddNewCar(c echo.Context) error {
 				Model:  req.Model,
 				Number: req.Number,
 				Status: req.Status,
+				Series: req.Series,
 			})
 			if err != nil {
 				h.log.WithError(err).Error("failed to insert new car into db")

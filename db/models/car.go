@@ -7,6 +7,7 @@ type Car struct {
 	Model    string `db:"model"`
 	Number   string `db:"number"`
 	Status   string `db:"status"`
+	Series   string `db:"series"`
 	ImageUrl string `db:"image_url"`
 }
 

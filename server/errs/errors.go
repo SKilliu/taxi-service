@@ -26,4 +26,7 @@ var (
 	CarAlreadyExistsErr     = ErrResp{"CAR_ALREADY_EXISTS", http.StatusForbidden}
 	IncorrectAccountTypeErr = ErrResp{"INCORRECT_ACCOUNT_TYPE", http.StatusForbidden}
 	CarDoesntExistErr       = ErrResp{"CAR_DOESNT_EXIST", http.StatusBadRequest}
+	EmptyActionForOrderErr  = ErrResp{"EMPTY_ACTION_FOR_ORDER", http.StatusForbidden}
+	HasNoAvailableCarsErr   = ErrResp{"HAS_NO_AVAILABLE_CARS", http.StatusForbidden}
+	IncorrectOrderErr       = ErrResp{"INCORRECT_ORDER", http.StatusBadRequest}
 )

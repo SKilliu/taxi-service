@@ -56,6 +56,9 @@ func Router(cfg config.Config) *echo.Echo {
 	router.POST("/operators/assign", provider.OperatorsHandler.AssignCarToDriver)
 
 	// Orders handler
+	router.POST("/orders", provider.OrdersHandler.CreateOrder)
+	router.GET("/orders", provider.OrdersHandler.GetAvailableOrders)
+	router.PATCH("/orders", provider.OrdersHandler.OrderActions)
 
 	return router
 }
