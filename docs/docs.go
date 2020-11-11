@@ -25,6 +25,103 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/operators/car": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Add new car to database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "operators"
+                ],
+                "summary": "Edit profile",
+                "parameters": [
+                    {
+                        "description": "Body for add new car request",
+                        "name": "JSON",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AddCarReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": ""
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/operators/user": {
+            "post": {
+                "description": "Create a new user by operator",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "operators"
+                ],
+                "summary": "Create new user",
+                "parameters": [
+                    {
+                        "description": "Body for creation of a new user",
+                        "name": "JSON",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SignUpReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": ""
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrResp"
+                        }
+                    }
+                }
+            }
+        },
         "/sign_in": {
             "post": {
                 "description": "Sign in with login and password",
@@ -73,7 +170,7 @@ var doc = `{
         },
         "/sign_up": {
             "post": {
-                "description": "Create a new user by operator",
+                "description": "Sign up with login, password and account type (driver, client or operator)",
                 "consumes": [
                     "application/json"
                 ],
@@ -83,10 +180,10 @@ var doc = `{
                 "tags": [
                     "authentication"
                 ],
-                "summary": "Create new user",
+                "summary": "Sign up",
                 "parameters": [
                     {
-                        "description": "Body for creation of a new user",
+                        "description": "Body for sign up",
                         "name": "JSON",
                         "in": "body",
                         "required": true,
@@ -99,7 +196,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": ""
+                            "$ref": "#/definitions/SignUpResp"
                         }
                     },
                     "400": {
@@ -124,7 +221,7 @@ var doc = `{
                         "bearerAuth": []
                     }
                 ],
-                "description": "Get user's profile by ID",
+                "description": "Get your profile",
                 "consumes": [
                     "application/json"
                 ],
@@ -132,18 +229,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "users"
                 ],
                 "summary": "Get profile",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "user ID for getting profile",
-                        "name": "user_id",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -179,7 +267,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "users"
                 ],
                 "summary": "Edit profile",
                 "parameters": [
@@ -217,6 +305,31 @@ var doc = `{
         }
     },
     "definitions": {
+        "AddCarReq": {
+            "type": "object",
+            "properties": {
+                "image_url": {
+                    "type": "string",
+                    "example": "http://photo/car-1223urhfrvndvnofvsd.jpg"
+                },
+                "model": {
+                    "type": "string",
+                    "example": "BMW"
+                },
+                "number": {
+                    "type": "string",
+                    "example": "AX1234XA"
+                },
+                "series": {
+                    "type": "string",
+                    "example": "M5"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "available"
+                }
+            }
+        },
         "EditProfileReq": {
             "type": "object",
             "properties": {
@@ -246,13 +359,17 @@ var doc = `{
         "GetProfileResp": {
             "type": "object",
             "properties": {
+                "account_type": {
+                    "type": "string",
+                    "example": "operator"
+                },
                 "email": {
                     "type": "string",
                     "example": "test@example.com"
                 },
                 "id": {
                     "type": "string",
-                    "example": "Yhte-saaiudchadsc-asdvcsf"
+                    "example": "Yh34te-saaiud3322chadsc-asdvcsf"
                 },
                 "name": {
                     "type": "string",
@@ -261,10 +378,6 @@ var doc = `{
                 "profile_image_url": {
                     "type": "string",
                     "example": "http://simple-service-backend/simple-service/photo-924y82hde7ce.jpg"
-                },
-                "type_view": {
-                    "type": "string",
-                    "example": "owner_view"
                 }
             }
         },

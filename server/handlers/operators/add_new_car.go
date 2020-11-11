@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"net/http"
 
+	"github.com/SKilliu/taxi-service/server/middlewares"
+
 	"github.com/SKilliu/taxi-service/db/models"
 	"github.com/google/uuid"
 
@@ -13,10 +15,29 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// AddNewCar godoc
+// @Security bearerAuth
+// @Summary Edit profile
+// @Tags operators
+// @Consume application/json
+// @Param JSON body dto.AddCarReq true "Body for add new car request"
+// @Description Add new car to database
+// @Accept  json
+// @Produce  json
+// @Success 200 {} http.StatusOk
+// @Failure 400 {object} errs.ErrResp
+// @Failure 500 {object} errs.ErrResp
+// @Router /operators/car [post]
 func (h *Handler) AddNewCar(c echo.Context) error {
 	var req dto.AddCarReq
 
-	err := c.Bind(&req)
+	accountType, _, err := middlewares.GetAccountTypeFromJWT(c.Request(), h.auth)
+	if accountType != dto.OperatorRole {
+		h.log.WithError(errs.IncorrectAccountTypeErr.ToError()).Error("incorrect account type in token")
+		return c.JSON(http.StatusForbidden, errs.IncorrectAccountTypeErr)
+	}
+
+	err = c.Bind(&req)
 	if err != nil {
 		h.log.WithError(errs.BadParamInBodyErr.ToError()).Error("failed to parse add new car request")
 		return c.JSON(http.StatusBadRequest, errs.BadParamInBodyErr)

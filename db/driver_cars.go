@@ -5,9 +5,9 @@ import (
 )
 
 type DriverCarsQ interface {
-	Insert(user models.Car) error
-	Update(user models.Car) error
-	Delete(car models.Car) error
+	Insert(user models.DriverCars) error
+	Update(user models.DriverCars) error
+	Delete(car models.DriverCars) error
 }
 
 type DriverCarsWrapper struct {
@@ -20,14 +20,14 @@ func (d *DB) DriverCarsQ() DriverCarsQ {
 	}
 }
 
-func (dc *DriverCarsWrapper) Insert(car models.Car) error {
+func (dc *DriverCarsWrapper) Insert(car models.DriverCars) error {
 	return dc.parent.db.Model(&car).Insert()
 }
 
-func (dc *DriverCarsWrapper) Update(car models.Car) error {
+func (dc *DriverCarsWrapper) Update(car models.DriverCars) error {
 	return dc.parent.db.Model(&car).Update()
 }
 
-func (dc *DriverCarsWrapper) Delete(car models.Car) error {
+func (dc *DriverCarsWrapper) Delete(car models.DriverCars) error {
 	return dc.parent.db.Model(&car).Delete()
 }

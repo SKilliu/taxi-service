@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"net/http"
 
+	"github.com/SKilliu/taxi-service/server/middlewares"
+
 	"github.com/SKilliu/taxi-service/server/dto"
 
 	"github.com/SKilliu/taxi-service/db/models"
@@ -28,7 +30,13 @@ import (
 func (h *Handler) CreateNewUser(c echo.Context) error {
 	var req dto.SignUpReq
 
-	err := c.Bind(&req)
+	accountType, _, err := middlewares.GetAccountTypeFromJWT(c.Request(), h.auth)
+	if accountType != dto.OperatorRole {
+		h.log.WithError(errs.IncorrectAccountTypeErr.ToError()).Error("incorrect account type in token")
+		return c.JSON(http.StatusForbidden, errs.IncorrectAccountTypeErr)
+	}
+
+	err = c.Bind(&req)
 	if err != nil {
 		h.log.WithError(errs.BadParamInBodyErr.ToError()).Error("failed to parse sign up request")
 		return c.JSON(http.StatusBadRequest, errs.BadParamInBodyErr)

@@ -1,8 +1,10 @@
-package operators
+package users
 
 import (
 	"database/sql"
 	"net/http"
+
+	"github.com/SKilliu/taxi-service/server/dto"
 
 	"github.com/SKilliu/taxi-service/server/errs"
 	"github.com/SKilliu/taxi-service/server/middlewares"
@@ -10,42 +12,34 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-const (
-	userID     = "user_id"
-	ownerView  = "owner_view"
-	publicView = "public_view"
-)
+const userID = "user_id"
 
 type GetProfileResp struct {
-	TypeView        string `json:"type_view" example:"owner_view"`
 	ID              string `json:"id" example:"Yhte-saaiudchadsc-asdvcsf"`
 	Name            string `json:"name" example:"Tester"`
 	Email           string `json:"email" example:"test@example.com"`
+	AccountType     string `json:"account_type"`
 	ProfileImageUrl string `json:"profile_image_url" example:"http://simple-service-backend/simple-service/photo-924y82hde7ce.jpg"`
 } //@name GetProfileResp
 
 // GetProfile godoc
 // @Security bearerAuth
 // @Summary Get profile
-// @Tags user
+// @Tags users
 // @Consume application/json
-// @Param user_id query string true "user ID for getting profile"
-// @Description Get user's profile by ID
+// @Description Get your profile
 // @Accept json
 // @Produce json
-// @Success 200 {object} GetProfileResp
+// @Success 200 {object} dto.GetProfileResp
 // @Failure 400 {object} errs.ErrResp
 // @Failure 500 {object} errs.ErrResp
 // @Router /user [get]
 func (h *Handler) GetProfile(c echo.Context) error {
-	var (
-		resp     GetProfileResp
-		typeView string
-	)
+	var resp dto.GetProfileResp
 
 	userID := c.QueryParam(userID)
 
-	reqOwnerID, _, err := middlewares.GetUserIDFromJWT(c.Request(), h.auth)
+	userID, _, err := middlewares.GetUserIDFromJWT(c.Request(), h.auth)
 	if err != nil {
 		h.log.WithError(err).Error("failed ot get user ID from token")
 		return c.JSON(http.StatusInternalServerError, errs.InternalServerErr)
@@ -63,17 +57,11 @@ func (h *Handler) GetProfile(c echo.Context) error {
 		}
 	}
 
-	if userID == reqOwnerID {
-		typeView = ownerView
-	} else {
-		typeView = publicView
-	}
-
-	resp = GetProfileResp{
-		TypeView:        typeView,
+	resp = dto.GetProfileResp{
 		ID:              user.ID,
 		Name:            user.Name,
 		Email:           user.Email,
+		AccountType:     user.AccountType,
 		ProfileImageUrl: user.ProfileImageUrl,
 	}
 

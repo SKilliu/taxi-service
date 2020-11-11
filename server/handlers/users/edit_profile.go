@@ -1,25 +1,22 @@
-package operators
+package users
 
 import (
 	"database/sql"
 	"net/http"
+
+	"github.com/SKilliu/taxi-service/server/dto"
 
 	"github.com/SKilliu/taxi-service/server/errs"
 	"github.com/SKilliu/taxi-service/server/middlewares"
 	"github.com/labstack/echo/v4"
 )
 
-type EditProfileReq struct {
-	Name  string `json:"name" example:"Tester"`
-	Email string `json:"email" example:"new-email@example.com"`
-} //@name EditProfileReq
-
 // EditProfile godoc
 // @Security bearerAuth
 // @Summary Edit profile
-// @Tags user
+// @Tags users
 // @Consume application/json
-// @Param JSON body EditProfileReq true "Body for edit profile request"
+// @Param JSON body dto.EditProfileReq true "Body for edit profile request"
 // @Description Edit user's name and email in profile info
 // @Accept  json
 // @Produce  json
@@ -28,7 +25,7 @@ type EditProfileReq struct {
 // @Failure 500 {object} errs.ErrResp
 // @Router /user [post]
 func (h *Handler) EditProfile(c echo.Context) error {
-	var req EditProfileReq
+	var req dto.EditProfileReq
 
 	err := c.Bind(&req)
 	if err != nil {

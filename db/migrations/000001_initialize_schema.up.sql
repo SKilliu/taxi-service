@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS orders (
 CREATE TABLE IF NOT EXISTS cars (
     id varchar(36) primary key,
     model varchar(255) not null,
+    series varchar(255) not null,
     number varchar(255) not null,
     status varchar(50) not null,
     image_url varchar(255) not null
