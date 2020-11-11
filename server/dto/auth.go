@@ -1,8 +1,6 @@
 package dto
 
 import (
-	"regexp"
-
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
 )
@@ -32,8 +30,6 @@ type SignInReq struct {
 func (c SignUpReq) Validate() error {
 	return validation.ValidateStruct(&c,
 		validation.Field(&c.Email, validation.Required, is.Email),
-		validation.Field(&c.Password, validation.Required, validation.Match(regexp.MustCompile("^[a-zA-Z0-9'-]{8,18}$"))),
-		validation.Field(&c.Email, validation.Required, validation.Length(5, 70)),
 		validation.Field(&c.AccountType, validation.Required, validation.In(DriverRole, OperatorRole, ClientRole)),
 	)
 }

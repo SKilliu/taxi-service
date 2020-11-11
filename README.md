@@ -21,7 +21,7 @@ You need to execute next commands
 
 `make compose-up`
 
-`make migration-u`
+`make migration-up`
 
 `make run`
 

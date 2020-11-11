@@ -28,10 +28,10 @@ CREATE TABLE IF NOT EXISTS trips (
 
 CREATE TABLE IF NOT EXISTS orders (
     id varchar(36) primary key,
-    driver_id varchar(36) references users (id) on delete cascade,
+    driver_id varchar(36) not null,
     client_id varchar(36) references users (id) on delete cascade,
-    car_id varchar(36) references cars (id) on delete cascade,
-    trip_id varchar(36) references trips (id) on delete cascade,
+    car_id varchar(36) not null,
+    trip_id varchar(36) not null,
     price float not null,
     status varchar(50) not null,
     car_arrival_time timestamp default current_timestamp,
