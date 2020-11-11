@@ -440,6 +440,36 @@ paths:
       summary: Get profile
       tags:
       - users
+    patch:
+      consumes:
+      - multipart/form-data
+      description: Update user's profile image
+      parameters:
+      - description: select image
+        in: formData
+        name: profile_image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrResp'
+      security:
+      - bearerAuth: []
+      summary: Update profile image
+      tags:
+      - users
     post:
       consumes:
       - application/json

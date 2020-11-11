@@ -12,8 +12,7 @@ CREATE TABLE IF NOT EXISTS cars (
     model varchar(255) not null,
     series varchar(255) not null,
     number varchar(255) not null,
-    status varchar(50) not null,
-    image_url varchar(255) not null
+    status varchar(50) not null
 );
 
 CREATE TABLE IF NOT EXISTS trips (

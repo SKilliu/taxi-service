@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/SKilliu/taxi-service/s3"
 	"github.com/caarlos0/env"
 )
 

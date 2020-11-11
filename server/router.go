@@ -49,6 +49,7 @@ func Router(cfg config.Config) *echo.Echo {
 	router.GET("/user", provider.UsersHandler.GetProfile)
 	router.POST("/user", provider.UsersHandler.EditProfile)
 	router.DELETE("/user", provider.UsersHandler.Delete)
+	router.PATCH("/user", provider.UsersHandler.UpdateProfileImage)
 
 	// Operators handlers
 	router.POST("/operators/user", provider.OperatorsHandler.CreateNewUser)

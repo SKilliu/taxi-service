@@ -1,6 +1,6 @@
 MIGRATIONS_FOLDER=db/migrations
 
-DATABASE_URL='postgres://postgres:1234567@localhost:5430/postgres?sslmode=disable'
+DATABASE_URL='postgres://postgres:1234567@localhost:5430/taxi-service?sslmode=disable'
 
 compose-up:
 	docker-compose up -d
